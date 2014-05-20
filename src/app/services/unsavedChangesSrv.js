@@ -30,6 +30,18 @@ function (angular, _, config) {
           self.open_modal();
         }
       });
+
+      $rootScope.$on("dashboard-loaded", function( event, newDashboard ) {
+          self.original = angular.copy(newDashboard);
+      });
+
+      $rootScope.$on("dashboard-saved", function( event, savedDashboard ) {
+          self.original = angular.copy(savedDashboard);
+      });
+
+      $rootScope.$on("$routeChangeSuccess", function() {
+          self.original = null;
+      });
     };
 
     this.open_modal = function () {
@@ -47,27 +59,26 @@ function (angular, _, config) {
     };
 
     this.has_unsaved_changes = function () {
-      if (!dashboard.original) {
+      if (!self.original) {
         return false;
       }
 
       var current = angular.copy(dashboard.current);
-      var original = dashboard.original;
 
       // ignore timespan changes
-      current.services.filter.time = original.services.filter.time = {};
+      current.services.filter.time = self.original.services.filter.time = {};
 
-      current.refresh = original.refresh;
+      current.refresh = self.original.refresh;
 
       var currentTimepicker = _.findWhere(current.nav, { type: 'timepicker' });
-      var originalTimepicker = _.findWhere(original.nav, { type: 'timepicker' });
+      var originalTimepicker = _.findWhere(self.original.nav, { type: 'timepicker' });
 
       if (currentTimepicker && originalTimepicker) {
         currentTimepicker.now = originalTimepicker.now;
       }
 
       var currentJson = angular.toJson(current);
-      var originalJson = angular.toJson(original);
+      var originalJson = angular.toJson(self.original);
 
       if (currentJson !== originalJson) {
         return true;
@@ -83,7 +94,7 @@ function (angular, _, config) {
     };
 
     modalScope.ignore = function() {
-      dashboard.original = null;
+      self.original = null;
       self.goto_next();
     };
 
