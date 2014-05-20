@@ -56,7 +56,6 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     var self = this;
 
     this.current = _.clone(_dash);
-    this.last = {};
     this.availablePanels = [];
 
     $rootScope.$on('$routeChangeSuccess',function(){
