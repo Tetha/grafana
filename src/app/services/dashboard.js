@@ -61,7 +61,6 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     $rootScope.$on('$routeChangeSuccess',function(){
       // Clear the current dashboard to prevent reloading
       self.current = {};
-      self.indices = [];
       route();
     });
 
