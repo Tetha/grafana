@@ -56,7 +56,6 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
     var self = this;
 
     this.current = _.clone(_dash);
-    this.availablePanels = [];
 
     $rootScope.$on('$routeChangeSuccess',function(){
       // Clear the current dashboard to prevent reloading
@@ -157,14 +156,7 @@ function (angular, $, kbn, _, config, moment, Modernizr) {
         self.set_interval(dashboard.refresh);
       }
 
-      // Set the available panels for the "Add Panel" drop down
-      self.availablePanels = _.difference(config.panel_names,
-        _.pluck(_.union(self.current.nav,self.current.pulldowns),'type'));
-
-      // Take out any that we're not allowed to add from the gui.
-      self.availablePanels = _.difference(self.availablePanels,config.hidden_panels);
-
-      $rootScope.$emit('dashboard-loaded', self.current);
+      $rootScope.$broadcast('dashboard-loaded', self.current);
 
       return true;
     };
