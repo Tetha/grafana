@@ -56,9 +56,10 @@ function (angular, app, _, moment, kbn) {
     $scope.$on('refresh', function(){$scope.init();});
 
     $scope.init = function() {
-      var time = this.filter.timeRange( true );
+      console.log( "Timepicker initialized from ", $scope );
+      var time = $scope.filter.timeRange( true );
       if(time) {
-        $scope.panel.now = this.filter.timeRange(false).to === "now" ? true : false;
+        $scope.panel.now = $scope.filter.timeRange(false).to === "now" ? true : false;
         $scope.time = getScopeTimeObj(time.from,time.to);
       }
     };
@@ -147,7 +148,7 @@ function (angular, app, _, moment, kbn) {
         to: "now"
       };
 
-      this.filter.setTime(_filter);
+      $scope.filter.setTime(_filter);
 
       $scope.time = getScopeTimeObj(kbn.parseDate(_filter.from),new Date());
     };

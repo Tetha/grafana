@@ -36,10 +36,6 @@ function (angular, $, config, _) {
 
     $scope.requiredElasticSearchVersion = ">=0.90.3";
 
-    $scope.editor = {
-      index: 0
-    };
-
     $scope.grafanaVersion = grafanaVersion[0] === '@' ? 'master' : grafanaVersion;
 
     // For moving stuff around the dashboard.
@@ -51,27 +47,13 @@ function (angular, $, config, _) {
 
 
     $scope.init = function() {
+      console.log( "DashCtrl.init() from scope ", $scope );
       $scope.config = config;
       // Make stuff, including underscore.js available to views
       $scope._ = _;
-      $scope.dashboard = dashboard;
       $scope.dashAlerts = alertSrv;
       
-      $scope.filter = filterSrv;
-      $scope.filter.init( dashboard.current );
 
-      $scope.$watch('dashboard.current', function(newValue) {
-          $scope.filter.init( newValue );
-      });
-
-      $scope.$on('dashboard-loaded', function( event, new_dashboard ) {
-        $scope.availablePanels = _.difference( config.panel_names,
-          _.pluck( _.union( new_dashboard.nav, new_dashboard.pulldowns ), 'type' ) );
-        $scope.availablePanels = _.difference( $scope.availablePanels, config.hidden_panels );
-      });
-      $scope.$watch('filter.time', function() {
-          $scope.dashboard.refresh();
-      }, true);
       // Clear existing alerts
       alertSrv.clearAll();
 
@@ -108,30 +90,6 @@ function (angular, $, config, _) {
       return { 'min-height': row.collapse ? '5px' : row.height };
     };
 
-    $scope.panel_path =function(type) {
-      if(type) {
-        return 'app/panels/'+type.replace(".","/");
-      } else {
-        return false;
-      }
-    };
-
-    $scope.edit_path = function(type) {
-      var p = $scope.panel_path(type);
-      if(p) {
-        return p+'/editor.html';
-      } else {
-        return false;
-      }
-    };
-
-    $scope.setEditorTabs = function(panelMeta) {
-      $scope.editorTabs = ['General','Panel'];
-      if(!_.isUndefined(panelMeta.editorTabs)) {
-        $scope.editorTabs =  _.union($scope.editorTabs,_.pluck(panelMeta.editorTabs,'title'));
-      }
-      return $scope.editorTabs;
-    };
 
     // This is whoafully incomplete, but will do for now
     $scope.parse_error = function(data) {

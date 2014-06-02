@@ -1,6 +1,8 @@
 define([
   './dash',
   './dashLoader',
+  './dashboard_provider',
+  './dashboard_editor',
   './row',
   './submenuCtrl',
   './pulldown',

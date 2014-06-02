@@ -9,9 +9,11 @@ function (angular, _, config, $) {
 
   var module = angular.module('kibana.controllers');
 
-  module.controller('SearchCtrl', function($scope, $rootScope, dashboard, $element, $location) {
+  module.controller('SearchCtrl', function($scope, $rootScope, ejsResource, dashboard, $element, $location) {
 
     $scope.init = function() {
+      // TODO hkraemer: this is duplicated from dash.js. Need to look at this.
+      $scope.ejs = ejsResource(config.elasticsearch, config.elasticsearchBasicAuth);
       $scope.giveSearchFocus = 0;
       $scope.selectedIndex = -1;
       $scope.results = {dashboards: [], tags: [], metrics: []};
