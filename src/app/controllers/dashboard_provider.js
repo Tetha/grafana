@@ -37,33 +37,6 @@ function (angular, $, config, _) {
       });
     }
 
-    // Shared Editor feature code - TODO: move
-    $scope.edit_path = function(type) {
-      var p = $scope.panel_path(type);
-      if(p) {
-        return p+'/editor.html';
-      } else {
-        return false;
-      }
-    };
-
-    // Shared Editor feature code - TODO: move
-    $scope.panel_path =function(type) {
-      if(type) {
-        return 'app/panels/'+type.replace(".","/");
-      } else {
-        return false;
-      }
-    };
-
-    // Panel Editor feature code - TODO: move
-    $scope.setEditorTabs = function(panelMeta) {
-      $scope.editorTabs = ['General','Panel'];
-      if(!_.isUndefined(panelMeta.editorTabs)) {
-        $scope.editorTabs =  _.union($scope.editorTabs,_.pluck(panelMeta.editorTabs,'title'));
-      }
-      return $scope.editorTabs;
-    };
     $scope.init();
   });
 });

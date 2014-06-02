@@ -22,6 +22,9 @@ function (angular, app, _) {
     _.defaults($scope.row,_d);
 
     $scope.init = function() {
+      $scope.editor = {
+        index : 0
+      };
       $scope.reset_panel();
     };
 
@@ -122,7 +125,15 @@ function (angular, app, _) {
          * type:: The type of panel this object contains. Each panel type will require additional
          * properties. See the panel types list to the right.
          */
-        type    : type
+        type    : type,
+
+        editPath : function() {
+          if ( type ) {
+            return 'app/panels/' + type.replace(".","/") + '/editor.html';
+          } else {
+            return false;
+          }
+        }
       };
 
       function fixRowHeight(height) {
@@ -142,6 +153,14 @@ function (angular, app, _) {
      * --
      */
 
+    // Panel Editor feature code - TODO: move
+    $scope.setEditorTabs = function(panelMeta) {
+      $scope.editorTabs = ['General','Panel'];
+      if(!_.isUndefined(panelMeta.editorTabs)) {
+        $scope.editorTabs =  _.union($scope.editorTabs,_.pluck(panelMeta.editorTabs,'title'));
+      }
+      return $scope.editorTabs;
+    };
     $scope.init();
 
   });

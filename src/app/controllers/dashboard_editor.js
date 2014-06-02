@@ -21,6 +21,24 @@ function (angular, $, config, _) {
       });
     };
 
+    // Shared Editor feature code - TODO: move
+    $scope.edit_path = function(type) {
+      var p = $scope.panel_path(type);
+      if(p) {
+        return p+'/editor.html';
+      } else {
+        return false;
+      }
+    };
+
+    // Shared Editor feature code - TODO: move
+    $scope.panel_path =function(type) {
+      if(type) {
+        return 'app/panels/'+type.replace(".","/");
+      } else {
+        return false;
+      }
+    };
     $scope.init();
   });
 });
