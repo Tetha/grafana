@@ -1,11 +1,13 @@
-<div class="navbar navbar-static-top">
-  <div class="navbar-inner">
-    <div class="container-fluid">
-      <span class="brand"><img src="img/small.png" bs-tooltip="'Grafana'" data-placement="bottom"> {{dashboard.current.title}}</span>
-      <ul class="nav pull-right" ng-controller='dashLoader' ng-init="init()" ng-include="'app/partials/dashLoader.html'">
-      </ul>
+<div ng-controller="DashCtrl">
+    <div class="navbar navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <span class="brand"><img src="img/small.png" bs-tooltip="'Grafana'" data-placement="bottom"> {{dashboard.current.title}}</span>
+          <ul class="nav pull-right" ng-controller='dashLoader' ng-init="init()" ng-include="'app/partials/dashLoader.html'">
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<div ng-controller="DashCtrl" ng-class="{'dashboard-fullscreen': fullscreen}" ng-include="'app/partials/dashboard.html'"></div>
+    <div ng-class="{'dashboard-fullscreen': fullscreen}" ng-include="'app/partials/dashboard.html'"></div>
+</div>
