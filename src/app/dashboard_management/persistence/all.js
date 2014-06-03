@@ -1,3 +1,4 @@
 define([
-  './elasticsearch_loader'
+  './elasticsearch_loader',
+  './file_loader'
 ]);

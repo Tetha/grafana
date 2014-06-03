@@ -55,26 +55,6 @@ function (angular, $, config, _) {
     };
 
     
-    var file_load = function( output_dashboard, file ) {
-      return $http({
-        url: "app/dashboards/"+file.replace(/\.(?!json)/,"/")+'?' + new Date().getTime(),
-        method: "GET",
-        transformResponse: function(response) {
-          return renderTemplate(response,$routeParams);
-        }
-      }).then(function(result) {
-        if(!result) {
-          return false;
-        }
-        _.defaults( result.data, output_dashboard );
-        _.defaults( result.data.loader, output_dashboard );
-        return true;
-      },function() {
-        alertSrv.set('Error',"Could not load <i>dashboards/"+file+"</i>. Please make sure it exists" ,'error');
-        return false;
-      });
-    };
-
 
     var renderTemplate = function(json,params) {
       var _r;
@@ -162,10 +142,6 @@ function (angular, $, config, _) {
         var _id = $routeParams.kbnId;
 
         switch(_type) {
-        case ('elasticsearch'):
-          return elasticsearch_load('dashboard',_id);
-        case ('temp'):
-          return elasticsearch_load(output_dashboard, 'temp',_id);
         case ('file'):
           return file_load(output_dashboard, _id);
         case('script'):
