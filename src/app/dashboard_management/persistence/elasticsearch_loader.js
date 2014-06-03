@@ -13,29 +13,24 @@ function( angular, $, config, _ ) {
     $routeProvider      
       .when( '/dashboard/elasticsearch/:kbnId', {
         templateUrl: 'app/partials/generic_dashboard.html',
-        controller : 'DashFromElasticSearchProvider'
+        controller : 'DashFromElasticSearchProvider',
+        resolve : { 'dashboardType' : function() { return 'dashboard'; } }
       })
       .when( '/dashboard/temp/:kbnId', {
         templateUrl: 'app/partials/generic_dashboard.html',
-        controller : 'DashFromElasticSearchProvider'
+        controller : 'DashFromElasticSearchProvider',
+        resolve : { 'dashboardType' : function() { return 'temp'; } }
       })
   });
   module.controller( "DashFromElasticSearchProvider",
-                     [ '$scope', '$routeParams', 'alertSrv', '$location', '$http', 'commonPostDashboardLoadSteps', 
-                       function( $scope, $routeParams, alertSrv, $location, $http, commonPostDashboardLoadSteps ) {
-    var typeToIndex = {
-      'elasticsearch' : 'dashboard',
-      'temp' : 'temp'
-    };
-
+                     [ '$scope', '$routeParams', 'alertSrv', '$http', 'dashboardType', 'commonPostDashboardLoadSteps', 
+                       function( $scope, $routeParams, alertSrv, $http, dashboardType, commonPostDashboardLoadSteps ) {
+                         console.log( dashboardType );
     $scope.init = function() {
-      elasticsearch_load( dashboardType(), $routeParams.kbnId )
+      elasticsearch_load( dashboardType, $routeParams.kbnId )
         .success( commonPostDashboardLoadSteps.finalize_load( $scope ));
     };
 
-    var dashboardType = function() {
-      return typeToIndex[ $location.$$path.split( "/" )[2]  ];
-    }
     // TODO: duplication with dashboard_provider and all future dashboard providers
     var renderTemplate = function(json,params) {
       var _r;
