@@ -142,8 +142,6 @@ function (angular, $, config, _) {
         var _id = $routeParams.kbnId;
 
         switch(_type) {
-        case('local'):
-          return local_load(output_dashboard);
         default:
           $location.path(config.default_route);
         }
