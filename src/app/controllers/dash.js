@@ -32,7 +32,7 @@ function (angular, $, config, _) {
 
   module.controller('DashCtrl', function(
     $scope, $rootScope, $timeout, ejsResource, dashboard, filterSrv, dashboardKeybindings,
-    alertSrv, panelMove, keyboardManager, grafanaVersion) {
+    alertSrv, panelMove, keyboardManager, grafanaVersion, timer) {
 
     $scope.requiredElasticSearchVersion = ">=0.90.3";
 
@@ -55,6 +55,16 @@ function (angular, $, config, _) {
       }, true);
 
       $scope.$on('dashboard-loaded', function( event, new_dashboard ) {
+        // Cancel all timers
+        timer.cancel_all();
+
+        // reset fullscreen flag
+        $rootScope.fullscreen = false;
+
+        window.document.title = 'Grafana - ' + $scope.dashboard.title;
+        if($scope.dashboard.refresh) {
+          $scope.dashboard.set_interval($scope.dashboard.refresh);
+        }
         // TODO: does this really make sense here?
         $scope.filter = filterSrv;
         $scope.filter.init( new_dashboard );

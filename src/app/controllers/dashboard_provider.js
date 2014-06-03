@@ -4,7 +4,8 @@ define([
   'config',
   'underscore',
   'services/all',
-  'services/dashboard/all'
+  'services/dashboard/all',
+  'dashboard_management/all'
 ],
 function (angular, $, config, _) {
   "use strict";
@@ -13,25 +14,11 @@ function (angular, $, config, _) {
 
   module.controller('DashProviderCtrl', function(
     $scope, $rootScope, $timeout, ejsResource, dashboard, filterSrv, dashboardKeybindings,
-    alertSrv, panelMove, keyboardManager, grafanaVersion, timer, $routeParams, $http) {
+    alertSrv, panelMove, keyboardManager, grafanaVersion, timer, $routeParams, $http, commonPostDashboardLoadSteps) {
 
     $scope.init = function() {
-      // Cancel all timers
-      timer.cancel_all();
-
-      // reset fullscreen flag
-      $rootScope.fullscreen = false;
-
-      // Set the current dashboard
-      actual_load( dashboard )
-        .then(function( dashboard ) {
-          window.document.title = 'Grafana - ' + $scope.dashboard.title;
-          if($scope.dashboard.refresh) {
-            $scope.dashboard.set_interval($scope.dashboard.refresh);
-          }
-
-          $rootScope.$broadcast('dashboard-loaded', $scope.dashboard);
-        });
+      return actual_load( dashboard )
+        .success(commonPostDashboardLoadSteps.finalize_load( $scope ));
     }
 
     // An elasticJS client to use
@@ -126,14 +113,6 @@ function (angular, $, config, _) {
             " are using a proxy, ensure it is configured correctly",'error');
         }
         return false;
-      }).success(function(data) {
-        output_dashboard = _.defaults( data, output_dashboard );
-        output_dashboard.loader = _.defaults( data.loader, output_dashboard.loader );
-        $.map( data.pulldowns, function( loaded_pulldown ) {
-            output_dashboard.pulldowns = _.reject( output_dashboard.services, function( default_pulldown ) { loaded_pulldown.type == default_pulldown.type } );
-            output_dashboard.pulldowns.unshift( loaded_pulldown );
-        });
-        $scope.dashboard = output_dashboard; // woo, this is wonkey now
       });
     };
 

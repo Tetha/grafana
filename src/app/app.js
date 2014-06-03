@@ -110,6 +110,10 @@ function (angular, $, _, appLevelRequire) {
     apps_deps.push(module_name);
   });
 
+  // TODO: check this
+  angular.module( "grafana.dashboard_management", [] );
+  apps_deps.push( "grafana.dashboard_management" );
+
   app.panel_helpers = {
     partial: function (name) {
       return 'app/partials/'+name+'.html';
