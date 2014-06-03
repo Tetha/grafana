@@ -76,10 +76,6 @@ function (angular, $, _, appLevelRequire) {
         templateUrl: 'app/partials/generic_dashboard.html',
         controller : 'DashProviderCtrl'
       })
-      .when('/dashboard/script/:kbnId/:params', {
-        templateUrl: 'app/partials/generic_dashboard.html',
-        controller : 'DashProviderCtrl'
-      })
       .otherwise({
         redirectTo: 'dashboard'
       });

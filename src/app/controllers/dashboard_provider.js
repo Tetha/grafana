@@ -142,10 +142,6 @@ function (angular, $, config, _) {
         var _id = $routeParams.kbnId;
 
         switch(_type) {
-        case ('file'):
-          return file_load(output_dashboard, _id);
-        case('script'):
-          return script_load(output_dashboard, _id);
         case('local'):
           return local_load(output_dashboard);
         default:
