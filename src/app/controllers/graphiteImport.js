@@ -70,7 +70,7 @@ function (angular, app, _) {
 
       currentRow = angular.copy(rowTemplate);
 
-      var newDashboard = angular.copy(dashboard.current);
+      var newDashboard = angular.copy(dashboard);
       newDashboard.rows = [];
       newDashboard.title = state.name;
       newDashboard.rows.push(currentRow);
@@ -98,6 +98,7 @@ function (angular, app, _) {
         currentRow.panels.push(panel);
       });
 
+      // TODO
       dashboard.dash_load(newDashboard);
     }
 

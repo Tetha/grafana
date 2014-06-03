@@ -38,7 +38,7 @@ function (angular, app, _) {
             $rootScope.$apply();
         }
         $timeout(function(){
-            this.dashboard.refresh();
+            this.dashboard.full_refresh();
         },0);
     };
 
@@ -91,7 +91,7 @@ function (angular, app, _) {
     };
 
     $scope.refresh = function() {
-      this.dashboard.refresh();
+      this.dashboard.full_refresh();
     };
 
     $scope.render = function() {

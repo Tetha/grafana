@@ -14,6 +14,7 @@ function (angular) {
           var files = evt.target.files; // FileList object
           var readerOnload = function() {
             return function(e) {
+              // TODO
               dashboard.dash_load(JSON.parse(e.target.result));
               scope.$apply();
             };

@@ -34,16 +34,16 @@ function (angular, _, kbn) {
     };
 
     this.isCurrentFavorite = function() {
-      return this._find(dashboard.current.title) ? true : false;
+      return this._find(dashboard.title) ? true : false;
     };
 
     this.markAsFavorite = function() {
-      var existing = this._find(dashboard.current.title);
+      var existing = this._find(dashboard.title);
       this._remove(existing);
 
       favorites.dashboards.push({
         url: $location.path(),
-        title: dashboard.current.title
+        title: dashboard.title
       });
 
       this._save();

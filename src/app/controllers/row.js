@@ -73,12 +73,12 @@ function (angular, app, _) {
         row.panels.push(angular.copy(panel));
       }
       else {
-        var rowsList = $scope.dashboard.current.rows;
+        var rowsList = $scope.dashboard.rows;
         var rowIndex = _.indexOf(rowsList, row);
         if (rowIndex === rowsList.length - 1) {
           var newRow = angular.copy($scope.row);
           newRow.panels = [];
-          $scope.dashboard.current.rows.push(newRow);
+          $scope.dashboard.rows.push(newRow);
           $scope.duplicatePanel(panel, newRow);
         }
         else {

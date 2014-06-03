@@ -29,9 +29,9 @@ function( angular, $ ) {
              }, { inputDisabled: true });
 
              keyboardManager.bind('ctrl+h', function() {
-                 var current = dashboard.current.hideControls;
-                 dashboard.current.hideControls = !current;
-                 dashboard.current.panel_hints = current;
+                 var current = dashboard.hideControls;
+                 dashboard.hideControls = !current;
+                 dashboard.panel_hints = current;
              }, { inputDisabled: true });
 
              keyboardManager.bind('ctrl+s', function(evt) {
@@ -39,7 +39,7 @@ function( angular, $ ) {
              }, { inputDisabled: true });
 
              keyboardManager.bind('ctrl+r', function() {
-                 dashboard.refresh();
+                 dashboard.full_refresh();
              }, { inputDisabled: true });
 
              keyboardManager.bind('ctrl+z', function(evt) {

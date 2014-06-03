@@ -15,10 +15,6 @@ function (angular, $, config, _) {
       $scope.editor = {
         index : 0
       };
-
-      $scope.$watch("editor.index", function() {
-        console.log( "index changed to ", $scope.editor.index );
-      });
     };
 
     // Shared Editor feature code - TODO: move

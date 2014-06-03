@@ -57,7 +57,7 @@ function (angular, _) {
     };
 
     var cleanup = function () {
-      _.each(dashboard.current.rows, function(row) {
+      _.each(dashboard.rows, function(row) {
         row.panels = _.without(row.panels,{});
         row.panels = _.compact(row.panels);
       });

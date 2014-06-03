@@ -104,7 +104,7 @@ function (angular, _, $, config, kbn, moment) {
         }
       }
 
-      if (dashboard.current.timezone === 'browser') {
+      if (dashboard.timezone === 'browser') {
         date = date.local();
       }
 

@@ -230,8 +230,8 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
     };
 
     $scope.updateTimeRange = function () {
-      $scope.range = this.filter.timeRange();
-      $scope.rangeUnparsed = this.filter.timeRange(false);
+      $scope.range = $scope.filter.timeRange();
+      $scope.rangeUnparsed = $scope.filter.timeRange(false);
       $scope.resolution = Math.ceil($(window).width() * ($scope.panel.span / 12));
       $scope.interval = '10m';
 
@@ -258,6 +258,10 @@ function (angular, app, $, _, kbn, moment, timeSeries) {
         datasource: $scope.panel.datasource
       };
 
+      // at this point, dashboard-loaded is already gone, so we need to manually trigger the
+      // reaction to this event. 
+      // TODO: consider if this is a good place to initialize the annotationsService
+      annotationsSrv.dashboardLoaded( undefined, $scope.dashboard );
       $scope.annotationsPromise = annotationsSrv.getAnnotations($scope.filter, $scope.rangeUnparsed);
 
       return $scope.datasource.query($scope.filter, graphiteQuery)

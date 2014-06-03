@@ -9,7 +9,7 @@ function (angular, _, moment) {
   var module = angular.module('kibana.controllers');
 
   module.controller('dashLoader', function($scope, $rootScope, $http, dashboard, alertSrv, $location, playlistSrv) {
-    $scope.loader = dashboard.current.loader;
+    $scope.loader = dashboard.loader;
 
     $scope.init = function() {
       $scope.gist_pattern = /(^\d{5,}$)|(^[a-z0-9]{10,}$)|(gist.github.com(\/*.*)\/[a-z0-9]{5,}\/*$)/;
@@ -30,11 +30,11 @@ function (angular, _, moment) {
     };
 
     $scope.showDropdown = function(type) {
-      if(_.isUndefined(dashboard.current.loader)) {
+      if(_.isUndefined(dashboard.loader)) {
         return true;
       }
 
-      var _l = dashboard.current.loader;
+      var _l = dashboard.loader;
       if(type === 'load') {
         return (_l.load_elasticsearch || _l.load_gist || _l.load_local);
       }
@@ -65,7 +65,7 @@ function (angular, _, moment) {
     };
 
     $scope.elasticsearch_save = function(type,ttl) {
-      dashboard.elasticsearch_save(type, dashboard.current.title, ttl)
+      dashboard.elasticsearch_save(type, dashboard.title, ttl)
         .then(function(result) {
           if(_.isUndefined(result._id)) {
             alertSrv.set('Save failed','Dashboard could not be saved to Elasticsearch','error',5000);
@@ -74,10 +74,10 @@ function (angular, _, moment) {
 
           alertSrv.set('Dashboard Saved', 'Dashboard has been saved to Elasticsearch as "' + result._id + '"','success', 5000);
           if(type === 'temp') {
-            $scope.share = dashboard.share_link(dashboard.current.title,'temp',result._id);
+            $scope.share = dashboard.share_link(dashboard.title,'temp',result._id);
           }
 
-          $rootScope.$emit('dashboard-saved', dashboard.current);
+          $rootScope.$emit('dashboard-saved', dashboard);
         });
     };
 
@@ -161,7 +161,7 @@ function (angular, _, moment) {
     };
 
     $scope.removeAsFavorite = function() {
-      playlistSrv.removeAsFavorite(dashboard.current);
+      playlistSrv.removeAsFavorite(dashboard);
       $scope.isFavorite = false;
     };
 
