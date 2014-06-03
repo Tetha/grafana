@@ -89,7 +89,7 @@ function (angular, $, config, _) {
       return _r;
     };
 
-    var elasticsearch_load = function(output_dashboard,type,id) {
+    var elasticsearch_load = function(type,id) {
       var options = {
         url: config.elasticsearch + "/" + config.grafana_index + "/"+type+"/"+id+'?' + new Date().getTime(),
         method: "GET",
@@ -163,7 +163,7 @@ function (angular, $, config, _) {
 
         switch(_type) {
         case ('elasticsearch'):
-          return elasticsearch_load(output_dashboard, 'dashboard',_id);
+          return elasticsearch_load('dashboard',_id);
         case ('temp'):
           return elasticsearch_load(output_dashboard, 'temp',_id);
         case ('file'):

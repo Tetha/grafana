@@ -72,11 +72,15 @@ function (angular, $, _, appLevelRequire) {
         templateUrl: 'app/partials/generic_dashboard.html',
         controller : 'DashProviderCtrl'
       })
-      .when('/dashboard/:kbnType/:kbnId', {
+      .when('/dashboard/file/:kbnId', {
         templateUrl: 'app/partials/generic_dashboard.html',
         controller : 'DashProviderCtrl'
       })
-      .when('/dashboard/:kbnType/:kbnId/:params', {
+      .when('/dashboard/local/:kbnId/:params', {
+        templateUrl: 'app/partials/generic_dashboard.html',
+        controller : 'DashProviderCtrl'
+      })
+      .when('/dashboard/script/:kbnId/:params', {
         templateUrl: 'app/partials/generic_dashboard.html',
         controller : 'DashProviderCtrl'
       })
@@ -98,7 +102,9 @@ function (angular, $, _, appLevelRequire) {
     'ngSanitize',
     'ngDragDrop',
     'kibana',
-    'pasvaz.bindonce'
+    'pasvaz.bindonce',
+    'grafana.dashboard_management',
+    'grafana.dashboard_management.persistence'
   ];
 
   _.each('controllers directives factories services services.dashboard filters'.split(' '),
@@ -112,7 +118,7 @@ function (angular, $, _, appLevelRequire) {
 
   // TODO: check this
   angular.module( "grafana.dashboard_management", [] );
-  apps_deps.push( "grafana.dashboard_management" );
+  angular.module( "grafana.dashboard_management.persistence", [] );
 
   app.panel_helpers = {
     partial: function (name) {
@@ -124,7 +130,8 @@ function (angular, $, _, appLevelRequire) {
   require([
     'controllers/all',
     'directives/all',
-    'filters/all'
+    'filters/all',
+    'dashboard_management/persistence/all'
   ], function () {
 
     // bootstrap the app

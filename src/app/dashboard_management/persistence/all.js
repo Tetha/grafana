@@ -1,0 +1,3 @@
+define([
+  './elasticsearch_loader'
+]);
